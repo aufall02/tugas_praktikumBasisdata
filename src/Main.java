@@ -22,9 +22,9 @@ public class Main {
     public static String update(){
             System.out.println("persiapan merubah data");
             System.out.printf("masukkan id yang mau diubah: ");
-            String idp=masukan.nextLine().trim();
+            String idp=masukan.next();
             System.out.printf("masukkan nama yang mau diubah: ");
-            String namap=masukan.nextLine().trim();
+            String namap=masukan.next();
             String sql = "update tbl_mahasiswa set nama='" +namap+"' where id='" +idp+"'" ;
 
             return sql;
@@ -33,7 +33,7 @@ public class Main {
     public static String delete(){
 
         System.out.printf("masukkan id yang mau didelete: ");
-        String idp=masukan.nextLine().trim();
+        String idp=masukan.next();
         String sql = "delete from tbl_mahasiswa where id='" +idp+"'" ;
 
         return sql;
@@ -60,15 +60,16 @@ public class Main {
     }
 // menambahkan data
     public static String insert(){
-        System.out.println("persiapan input");
-            System.out.printf("masukkan id:  ");
-            String idI=masukan.nextLine().trim();
-            System.out.printf("masukkan nim:  ");
-            String nimI=masukan.nextLine().trim();
-            System.out.printf("masukkan nama:  ");
-            String namaI=masukan.nextLine().trim();
-            System.out.printf("masukkan alamat:  ");
-            String alamatI=masukan.nextLine().trim();
+            System.out.println("persiapan input");
+            System.out.print("masukkan id: ");
+
+            int idI=masukan.nextInt();
+            System.out.print("masukkan nim:");
+            String nimI=masukan.next();
+            System.out.print("masukkan nama:");
+            String namaI=masukan.next();
+            System.out.print("masukkan alamat:");
+            String alamatI=masukan.next();
             String sql = "insert into tbl_mahasiswa(id,nim,nama,alamat)" + "values('"+idI+"','"+nimI+"','"+namaI+"','"+alamatI+"')";
            return sql;
     }
@@ -88,19 +89,29 @@ public class Main {
 
 
     public static void main(String[] args) {
+//        insert();
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
 
             while(true){
+                System.out.println("=================pilih menuuu ================");
+                System.out.println("menu 1: lihat data");
+                System.out.println("menu 2: insert data");
+                System.out.println("menu 3: update data");
+                System.out.println("menu 4: delete data");
+                System.out.println("menu 5: exit");
+                System.out.print("pilih menu: ");
+                int menu=masukan.nextInt();
 
-
-                switch (menu()){
-                    case 1: datas();
+                switch (menu){
+                    case 1:
+                        datas();
                         break;
-                    case 2: insert();
-                        System.out.println("data berhasil di masukkan");
+                    case 2:
+                        stmt.execute(insert());
+//                        System.out.print("data berhasil di masukkan");
                         break;
                     case 3:
                         stmt.execute(update());
